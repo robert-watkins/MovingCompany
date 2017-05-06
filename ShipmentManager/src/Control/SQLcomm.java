@@ -15,9 +15,9 @@ public class SQLcomm {
 
     public SQLcomm() {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/shipments",
-                    "root",
-                    "<password>");
+            con = DriverManager.getConnection("jdbc:mysql://watkins.network:3306",
+                    "rwatkins",
+                    "444#ishZ");
         } catch (SQLException ex) {
             Logger.getLogger(SQLcomm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -30,6 +30,7 @@ public class SQLcomm {
     
     
     public static void main(String[] args) {
+        SQLcomm scom = new SQLcomm();
         
         
         
