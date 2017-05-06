@@ -15,7 +15,7 @@ public class SQLcomm {
 
     public SQLcomm() {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://watkins.network:3306",
+            con = DriverManager.getConnection("jdbc:mysql://watkins.network:3306/shipping_manager",
                     "rwatkins",
                     "444#ishZ");
         } catch (SQLException ex) {
@@ -30,7 +30,7 @@ public class SQLcomm {
     
     
     public static void main(String[] args) {
-        SQLcomm scom = new SQLcomm();
+        SQLcomm sql = new SQLcomm();
         
         
         
