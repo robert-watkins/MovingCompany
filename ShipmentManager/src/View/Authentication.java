@@ -5,6 +5,8 @@
  */
 package View;
 
+import Control.SQLcomm;
+
 /**
  *
  * @author rwatkins
@@ -16,6 +18,8 @@ public class Authentication extends javax.swing.JFrame {
      */
     public Authentication() {
         initComponents();
+        lblIncorrectUsername.setVisible(false);
+        lblIncorrectPassword.setVisible(false);
     }
 
     /**
@@ -125,6 +129,23 @@ public class Authentication extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuExitActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String user_name = txtUsername.getText();
+        String passwd = txtPassword.getText();
+        if(con.isValid(user_name)){
+            System.out.println(con.isValid(user_name));
+        }else{
+            lblIncorrectUsername.setVisible(true);
+            txtUsername.setText("");
+        }
+        if(passwd.equals(con.getAuth(user_name).getAuthentication())){
+            if(true){
+            
+            }
+        }
+        
+        
+        
+
         // TODO - make method in sqlcomm to query for an arraylist(or hashmap)
         //  of usernames and passwords and compares them with txtUsername and 
         //  txtPassword. If either doesnt match make lblIncorrectUsername
@@ -163,6 +184,7 @@ public class Authentication extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Authentication().setVisible(true);
             }
@@ -182,6 +204,8 @@ public class Authentication extends javax.swing.JFrame {
     private java.awt.TextField txtPassword;
     private java.awt.TextField txtUsername;
     // End of variables declaration//GEN-END:variables
-
+    SQLcomm con = new SQLcomm();
+    
+    
 
 }

@@ -12,7 +12,16 @@ public class User {
     private int employee_id;
     private String user_name;
     private String authentication;
+    private String clearance;
     private Date last_update;
+    
+    public User(int user_id, int employee_id, String user_name, String authentication, String clearance){
+        this.user_id = user_id;
+        this.employee_id = employee_id;
+        this.user_name = user_name;
+        this.authentication = authentication;
+        this.clearance = clearance;
+    }
 
     /**
      * @return the user_id
@@ -82,6 +91,20 @@ public class User {
      */
     public void setLast_update(Date last_update) {
         this.last_update = last_update;
+    }
+
+    /**
+     * @return the clearance
+     */
+    public String getClearance() {
+        return clearance;
+    }
+
+    /**
+     * @param clearance the clearance to set
+     */
+    public void setClearence(String clearance) {
+        this.clearance = clearance;
     }
 
 }
