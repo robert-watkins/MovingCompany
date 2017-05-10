@@ -129,6 +129,9 @@ public class Authentication extends javax.swing.JFrame {
         //  of usernames and passwords and compares them with txtUsername and 
         //  txtPassword. If either doesnt match make lblIncorrectUsername
         //  or lblIncorrectPassword Visible
+        
+        //  If it matches, open the user interface corresponding to the user's 
+        //  clearance.
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
@@ -179,4 +182,6 @@ public class Authentication extends javax.swing.JFrame {
     private java.awt.TextField txtPassword;
     private java.awt.TextField txtUsername;
     // End of variables declaration//GEN-END:variables
+
+
 }
