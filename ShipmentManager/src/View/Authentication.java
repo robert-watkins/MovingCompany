@@ -18,8 +18,10 @@ public class Authentication extends javax.swing.JFrame {
      */
     public Authentication() {
         initComponents();
+        txtPassword.setEchoChar('*');
         lblIncorrectUsername.setVisible(false);
         lblIncorrectPassword.setVisible(false);
+        revalidate();
     }
 
     /**
@@ -89,10 +91,10 @@ public class Authentication extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblLoginTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblLoginTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblIncorrectUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -132,15 +134,32 @@ public class Authentication extends javax.swing.JFrame {
         String user_name = txtUsername.getText();
         String passwd = txtPassword.getText();
         if(con.isValid(user_name)){
-            System.out.println(con.isValid(user_name));
+            lblIncorrectUsername.setVisible(false);
+            revalidate();
         }else{
             lblIncorrectUsername.setVisible(true);
             txtUsername.setText("");
+            revalidate();
         }
-        if(passwd.equals(con.getAuth(user_name).getAuthentication())){
-            if(true){
-            
+        if (passwd.equals(con.getAuth(user_name).getAuthentication())){
+            lblIncorrectPassword.setVisible(false);
+            revalidate();
+            if(con.getAuth(user_name).getClearance().equals("admin")){
+                ManagerDash mdash = new ManagerDash();
+                mdash.setVisible(true);
+            }else{
+                TeamDash tdash = new TeamDash();
+                tdash.setVisible(true);
+                txtUsername.setText("");
+                txtPassword.setText("");
             }
+            System.out.println("it worked!!!!!");
+        }else{
+            lblIncorrectPassword.setVisible(true);
+            txtPassword.setText("");
+            revalidate();
+            
+            System.out.println("it didnt work :(");
         }
         
         
