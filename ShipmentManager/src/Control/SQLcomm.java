@@ -29,9 +29,37 @@ public class SQLcomm {
     //**************************************************************************
     // Get Shipment for manager and team dashboard
     //**************************************************************************
-    
-    
-    
+  
+    public ArrayList getShipments() {
+        ArrayList<Shipment> ships = new ArrayList();
+        PreparedStatement getShips;
+        try {
+            getShips = con.prepareStatement("SELECT Shipments.*, Customers.first_name, "
+                    + "Customers.last_name FROM Shipments\n"
+                    + "JOIN Customers ON Shipments.customer_id=Customers.customer_id;");
+            ResultSet results = getShips.executeQuery();
+            while (results.next()) {
+                ships.add(new Shipment(
+                        results.getInt("shipment_id"),
+                        results.getInt("customer_id"),
+                        results.getString("last_name"),
+                        results.getString("first_name"),
+                        results.getDate("order_date"),
+                        results.getInt("truck_id"),
+                        results.getInt("team_id"),
+                        results.getString("status"),
+                        results.getDouble("weight"),
+                        results.getDate("date_in"),
+                        results.getDate("date_out")
+                ));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLcomm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return ships;
+    }
+
     //**************************************************************************
     // Get Authentication
     //**************************************************************************
