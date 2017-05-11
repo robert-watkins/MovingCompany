@@ -216,6 +216,9 @@
       </Properties>
     </Component>
     <Component class="java.awt.TextField" name="txtSearch">
+      <Events>
+        <EventHandler event="textValueChanged" listener="java.awt.event.TextListener" parameters="java.awt.event.TextEvent" handler="txtSearchTextValueChanged"/>
+      </Events>
     </Component>
     <Component class="java.awt.Label" name="lblTitleManDash">
       <Properties>

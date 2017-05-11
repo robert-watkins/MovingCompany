@@ -23,8 +23,7 @@ public class ManagerDash extends javax.swing.JFrame {
     public ManagerDash() {
         initComponents();
         con = new SQLcomm();
-        ArrayList <Shipment> shipments = con.getShipments();
-        fillManagerTable(shipments);
+        fillManagerTable();
     }
 
     /**
@@ -80,6 +79,12 @@ public class ManagerDash extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblMainDisplay);
 
         lblSearch.setText("Search");
+
+        txtSearch.addTextListener(new java.awt.event.TextListener() {
+            public void textValueChanged(java.awt.event.TextEvent evt) {
+                txtSearchTextValueChanged(evt);
+            }
+        });
 
         lblTitleManDash.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         lblTitleManDash.setText("Management Dashboard");
@@ -189,12 +194,17 @@ public class ManagerDash extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuExitActionPerformed
 
     private void mnuRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRefreshActionPerformed
-        // TODO add your handling code here:
+        fillManagerTable();
     }//GEN-LAST:event_mnuRefreshActionPerformed
 
     private void btnEditShipmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditShipmentActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditShipmentActionPerformed
+
+    private void txtSearchTextValueChanged(java.awt.event.TextEvent evt) {//GEN-FIRST:event_txtSearchTextValueChanged
+        ArrayList <Shipment> shipmentSearch = con.getShipments(txtSearch.getText());
+        fillManagerTable(shipmentSearch);
+    }//GEN-LAST:event_txtSearchTextValueChanged
 
     /**
      * @param args the command line arguments
@@ -250,9 +260,28 @@ public class ManagerDash extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private SQLcomm con;
 
+
+    private void fillManagerTable() {
+        ArrayList <Shipment> shipments = con.getShipments();
+        DefaultTableModel model = (DefaultTableModel) tblMainDisplay.getModel();
+        Object rowData[] = new Object[7];
+        model.setRowCount(0);
+        for(int i = 0; i<shipments.size(); i++){
+            rowData[0] = shipments.get(i).getShipment_id();
+            rowData[1] = shipments.get(i).getLast_name();
+            rowData[2] = shipments.get(i).getFirst_name();
+            rowData[3] = shipments.get(i).getStatus();
+            rowData[4] = shipments.get(i).getWeight();
+            rowData[5] = shipments.get(i).getDate_in();
+            rowData[6] = shipments.get(i).getDate_out();
+            model.addRow(rowData);
+        }
+    }
+    
     private void fillManagerTable(ArrayList<Shipment> shipments) {
         DefaultTableModel model = (DefaultTableModel) tblMainDisplay.getModel();
         Object rowData[] = new Object[7];
+        model.setRowCount(0);
         for(int i = 0; i<shipments.size(); i++){
             rowData[0] = shipments.get(i).getShipment_id();
             rowData[1] = shipments.get(i).getLast_name();
