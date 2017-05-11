@@ -12,10 +12,23 @@ public class Customer {
     private String first_name;
     private String last_name;
     private String middle_name;
-    private String social_security;
+    private int social_security;
     private String pickup_address;
     private String delivery_address;
     private Date last_update;
+
+    public Customer(String first, String last, int social) {
+        this.first_name = first;
+        this.last_name = last;
+        this.social_security = social;
+    }
+    
+    public Customer(int customerId, String first, String last, int social) {
+        this.customer_id = customerId;
+        this.first_name = first;
+        this.last_name = last;
+        this.social_security = social;
+    }
 
     /**
      * @return the customer_id
@@ -76,14 +89,14 @@ public class Customer {
     /**
      * @return the social_security
      */
-    public String getSocial_security() {
+    public int getSocial_security() {
         return social_security;
     }
 
     /**
      * @param social_security the social_security to set
      */
-    public void setSocial_security(String social_security) {
+    public void setSocial_security(int social_security) {
         this.social_security = social_security;
     }
 

@@ -14,12 +14,12 @@ import java.text.SimpleDateFormat;
  *
  * @author Clayton Miller
  */
-public class NewShipment extends javax.swing.JFrame {
+public class EditShipment extends javax.swing.JFrame {
 
     /**
      * Creates new form EditShipment
      */
-    public NewShipment() {
+    public EditShipment() {
         initComponents();
         chStatus.add("New");
         chStatus.add("Packing");
@@ -33,7 +33,19 @@ public class NewShipment extends javax.swing.JFrame {
         
     }
     
-    
+    public EditShipment(int id) {
+        initComponents();
+        chStatus.add("New");
+        chStatus.add("Packing");
+        chStatus.add("Storage");
+        chStatus.add("In Transit");
+        chStatus.add("Unpacking");
+        chStatus.add("Delivered");
+        chStatus.add("Fulfilled");
+        fillFields(id);
+        
+        
+    }
     
     SQLcomm con = new SQLcomm();
 
@@ -245,12 +257,13 @@ public class NewShipment extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
+        label10.getAccessibleContext().setAccessibleName("Date Out");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        con.createCustomer(collectCustomer());
-        con.createShipment(collectShipment());
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void jRadioButtonMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem1ActionPerformed
@@ -282,21 +295,20 @@ public class NewShipment extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewShipment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditShipment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewShipment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditShipment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewShipment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditShipment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewShipment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditShipment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewShipment().setVisible(true);
+                new EditShipment().setVisible(true);
             }
         });
     }
@@ -333,6 +345,17 @@ public class NewShipment extends javax.swing.JFrame {
     DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
     Customer cust;
     
+    private void fillFields(int shipment_id) {
+        Shipment ship = con.getShipment(shipment_id);
+        txtDate.setText(ship.getOrder_date() + "");
+        txtTruck.setText(ship.getTruck_id() + "");
+        txtTeam.setText(ship.getTeam_id() + "");
+        chStatus.select(ship.getStatus());
+        txtWeight.setText(ship.getWeight() + "");
+        txtDate_In.setText(ship.getDate_in() + "");
+        txtDate_out.setText(ship.getDate_out() + "");
+        
+    }
     
 private Shipment collectShipment() {
     shipment = new Shipment (

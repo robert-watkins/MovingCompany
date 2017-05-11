@@ -12,20 +12,19 @@ public class Shipment {
     private int customer_id;
     private String last_name;
     private String first_name;
-    private Date order_date; 
+    private String order_date; 
     private int truck_id;
     private int team_id;
-
     private String status;
     private double weight;
-    private Date date_in;
-    private Date date_out;
+    private String date_in;
+    private String date_out;
     private Date last_update;
 
     public Shipment(int shipment_id, int customer_id, String last_name, 
-            String first_name, Date order_date, int truck_id, int team_id, 
-            String status, double weight, Date date_in, 
-            Date date_out){
+            String first_name, String order_date, int truck_id, int team_id, 
+            String status, double weight, String date_in, 
+            String date_out){
         this.shipment_id = shipment_id;
         this.customer_id = customer_id;
         this.last_name = last_name;
@@ -33,13 +32,49 @@ public class Shipment {
         this.order_date = order_date;
         this.truck_id = truck_id;
         this.team_id = team_id;
-
         this.status = status;
         this.weight = weight;
         this.date_in = date_in;
         this.date_out = date_out;
         
     }
+    
+    public Shipment(int shipment_id, int customer_id, 
+            String order_date, int truck_id, int team_id, 
+            String status, double weight, String date_in, 
+            String date_out){
+        this.shipment_id = shipment_id;
+        this.customer_id = customer_id;
+        this.order_date = order_date;
+        this.truck_id = truck_id;
+        this.team_id = team_id;
+        this.status = status;
+        this.weight = weight;
+        this.date_in = date_in;
+        this.date_out = date_out;
+        
+    }
+    
+    public Shipment(int customer_id, 
+            String order_date, int truck_id, int team_id, 
+            String status, double weight, String date_in, 
+            String date_out){
+        this.customer_id = customer_id;
+        this.order_date = order_date;
+        this.truck_id = truck_id;
+        this.team_id = team_id;
+        this.status = status;
+        this.weight = weight;
+        this.date_in = date_in;
+        this.date_out = date_out;
+        
+    }
+    
+    public Shipment(int customer_id, Date order_date, int truck_id, int team_id, 
+            String status, double weight, String date_in, String date_out){
+        
+    }
+    
     /**
      * @return the shipment_id
      */
@@ -71,14 +106,14 @@ public class Shipment {
     /**
      * @return the order_date
      */
-    public Date getOrder_date() {
+    public String getOrder_date() {
         return order_date;
     }
 
     /**
      * @param order_date the order_date to set
      */
-    public void setOrder_date(Date order_date) {
+    public void setOrder_date(String order_date) {
         this.order_date = order_date;
     }
 
@@ -141,28 +176,28 @@ public class Shipment {
     /**
      * @return the date_in
      */
-    public Date getDate_in() {
+    public String getDate_in() {
         return date_in;
     }
 
     /**
      * @param date_in the date_in to set
      */
-    public void setDate_in(Date date_in) {
+    public void setDate_in(String date_in) {
         this.date_in = date_in;
     }
 
     /**
      * @return the date_out
      */
-    public Date getDate_out() {
+    public String getDate_out() {
         return date_out;
     }
 
     /**
      * @param date_out the date_out to set
      */
-    public void setDate_out(Date date_out) {
+    public void setDate_out(String date_out) {
         this.date_out = date_out;
     }
 

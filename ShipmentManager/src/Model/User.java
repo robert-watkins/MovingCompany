@@ -23,6 +23,13 @@ public class User {
         this.clearance = clearance;
     }
 
+    public User(int employee_id, String user_name, String authentication, String clearance){
+        this.employee_id = employee_id;
+        this.user_name = user_name;
+        this.authentication = authentication;
+        this.clearance = clearance;
+    }
+    
     /**
      * @return the user_id
      */

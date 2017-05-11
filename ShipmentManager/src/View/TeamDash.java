@@ -5,6 +5,12 @@
  */
 package View;
 
+import Control.SQLcomm;
+import Model.*;
+import java.util.ArrayList;
+import Control.SQLcomm;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author rwatkins
@@ -16,6 +22,8 @@ public class TeamDash extends javax.swing.JFrame {
      */
     public TeamDash() {
         initComponents();
+        con = new SQLcomm();
+        fillManagerTable();
     }
 
     /**
@@ -32,66 +40,60 @@ public class TeamDash extends javax.swing.JFrame {
         lblSearch = new java.awt.Label();
         txtSearch = new java.awt.TextField();
         lblTitleTeamDash = new java.awt.Label();
-        btnEditShipment = new java.awt.Button();
+        btnUpdateShipment = new java.awt.Button();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        mnuNewShipment = new javax.swing.JMenuItem();
-        mnuNewUser = new javax.swing.JMenuItem();
         mnuRefresh = new javax.swing.JMenuItem();
         mnuExit = new javax.swing.JMenuItem();
         mnuEditShipment = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        mnuEditUser = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tblMainDisplay.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "Shipment ID", "Name", "Status", "Weight", "Date In", "Date Out"
+                "Shipment ID", "Last Name", "First Name", "Status", "Weight", "Date In", "Date Out"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(tblMainDisplay);
 
         lblSearch.setText("Search");
 
+        txtSearch.addTextListener(new java.awt.event.TextListener() {
+            public void textValueChanged(java.awt.event.TextEvent evt) {
+                txtSearchTextValueChanged(evt);
+            }
+        });
+
         lblTitleTeamDash.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         lblTitleTeamDash.setText("Team Dashboard");
 
-        btnEditShipment.setLabel("Edit Shipment");
-        btnEditShipment.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdateShipment.setLabel("Update Shipment");
+        btnUpdateShipment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditShipmentActionPerformed(evt);
+                btnUpdateShipmentActionPerformed(evt);
             }
         });
 
         jMenu1.setText("File");
-
-        mnuNewShipment.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        mnuNewShipment.setText("New Shipment");
-        mnuNewShipment.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuNewShipmentActionPerformed(evt);
-            }
-        });
-        jMenu1.add(mnuNewShipment);
-
-        mnuNewUser.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
-        mnuNewUser.setText("New User");
-        jMenu1.add(mnuNewUser);
 
         mnuRefresh.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         mnuRefresh.setText("Refresh Database");
@@ -116,12 +118,8 @@ public class TeamDash extends javax.swing.JFrame {
         mnuEditShipment.setText("Edit");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Edit Shipment");
+        jMenuItem1.setText("Update Shipment");
         mnuEditShipment.add(jMenuItem1);
-
-        mnuEditUser.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        mnuEditUser.setText("Edit Users");
-        mnuEditShipment.add(mnuEditUser);
 
         jMenuBar1.add(mnuEditShipment);
 
@@ -144,8 +142,8 @@ public class TeamDash extends javax.swing.JFrame {
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(292, 292, 292)
-                        .addComponent(btnEditShipment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(279, 279, 279)
+                        .addComponent(btnUpdateShipment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -158,17 +156,13 @@ public class TeamDash extends javax.swing.JFrame {
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEditShipment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnUpdateShipment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void mnuNewShipmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuNewShipmentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mnuNewShipmentActionPerformed
 
     private void mnuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExitActionPerformed
         this.setVisible(false);
@@ -176,12 +170,17 @@ public class TeamDash extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuExitActionPerformed
 
     private void mnuRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRefreshActionPerformed
-        // TODO add your handling code here:
+        fillManagerTable();
     }//GEN-LAST:event_mnuRefreshActionPerformed
 
-    private void btnEditShipmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditShipmentActionPerformed
+    private void btnUpdateShipmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateShipmentActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditShipmentActionPerformed
+    }//GEN-LAST:event_btnUpdateShipmentActionPerformed
+
+    private void txtSearchTextValueChanged(java.awt.event.TextEvent evt) {//GEN-FIRST:event_txtSearchTextValueChanged
+        ArrayList <Shipment> shipmentSearch = con.getShipments(txtSearch.getText());
+        fillManagerTable(shipmentSearch);
+    }//GEN-LAST:event_txtSearchTextValueChanged
 
     /**
      * @param args the command line arguments
@@ -220,7 +219,7 @@ public class TeamDash extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button btnEditShipment;
+    private java.awt.Button btnUpdateShipment;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -228,12 +227,46 @@ public class TeamDash extends javax.swing.JFrame {
     private java.awt.Label lblSearch;
     private java.awt.Label lblTitleTeamDash;
     private javax.swing.JMenu mnuEditShipment;
-    private javax.swing.JMenuItem mnuEditUser;
     private javax.swing.JMenuItem mnuExit;
-    private javax.swing.JMenuItem mnuNewShipment;
-    private javax.swing.JMenuItem mnuNewUser;
     private javax.swing.JMenuItem mnuRefresh;
     private javax.swing.JTable tblMainDisplay;
     private java.awt.TextField txtSearch;
     // End of variables declaration//GEN-END:variables
+    private SQLcomm con;
+
+
+    private void fillManagerTable() {
+        ArrayList <Shipment> shipments = con.getShipments();
+        DefaultTableModel model = (DefaultTableModel) tblMainDisplay.getModel();
+        Object rowData[] = new Object[7];
+        model.setRowCount(0);
+        for(int i = 0; i<shipments.size(); i++){
+            rowData[0] = shipments.get(i).getShipment_id();
+            rowData[1] = shipments.get(i).getLast_name();
+            rowData[2] = shipments.get(i).getFirst_name();
+            rowData[3] = shipments.get(i).getStatus();
+            rowData[4] = shipments.get(i).getWeight();
+            rowData[5] = shipments.get(i).getDate_in();
+            rowData[6] = shipments.get(i).getDate_out();
+            model.addRow(rowData);
+        }
+    }
+    
+    private void fillManagerTable(ArrayList<Shipment> shipments) {
+        DefaultTableModel model = (DefaultTableModel) tblMainDisplay.getModel();
+        Object rowData[] = new Object[7];
+        model.setRowCount(0);
+        for(int i = 0; i<shipments.size(); i++){
+            rowData[0] = shipments.get(i).getShipment_id();
+            rowData[1] = shipments.get(i).getLast_name();
+            rowData[2] = shipments.get(i).getFirst_name();
+            rowData[3] = shipments.get(i).getStatus();
+            rowData[4] = shipments.get(i).getWeight();
+            rowData[5] = shipments.get(i).getDate_in();
+            rowData[6] = shipments.get(i).getDate_out();
+            model.addRow(rowData);
+        }
+    }
+    
+
 }
