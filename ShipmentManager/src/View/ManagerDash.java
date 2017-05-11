@@ -5,6 +5,12 @@
  */
 package View;
 
+import Control.SQLcomm;
+import Model.*;
+import java.util.ArrayList;
+import Control.SQLcomm;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author rwatkins
@@ -16,6 +22,9 @@ public class ManagerDash extends javax.swing.JFrame {
      */
     public ManagerDash() {
         initComponents();
+        con = new SQLcomm();
+        ArrayList <Shipment> shipments = con.getShipments();
+        fillManagerTable(shipments);
     }
 
     /**
@@ -47,21 +56,25 @@ public class ManagerDash extends javax.swing.JFrame {
 
         tblMainDisplay.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "Shipment ID", "Name", "Status", "Weight", "Date In", "Date Out"
+                "Shipment ID", "Last Name", "First Name", "Status", "Weight", "Date In", "Date Out"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(tblMainDisplay);
@@ -235,4 +248,22 @@ public class ManagerDash extends javax.swing.JFrame {
     private javax.swing.JTable tblMainDisplay;
     private java.awt.TextField txtSearch;
     // End of variables declaration//GEN-END:variables
+    private SQLcomm con;
+
+    private void fillManagerTable(ArrayList<Shipment> shipments) {
+        DefaultTableModel model = (DefaultTableModel) tblMainDisplay.getModel();
+        Object rowData[] = new Object[7];
+        for(int i = 0; i<shipments.size(); i++){
+            rowData[0] = shipments.get(i).getShipment_id();
+            rowData[1] = shipments.get(i).getLast_name();
+            rowData[2] = shipments.get(i).getFirst_name();
+            rowData[3] = shipments.get(i).getStatus();
+            rowData[4] = shipments.get(i).getWeight();
+            rowData[5] = shipments.get(i).getDate_in();
+            rowData[6] = shipments.get(i).getDate_out();
+            model.addRow(rowData);
+        }
+    }
+    
+
 }
