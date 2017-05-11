@@ -49,9 +49,8 @@ public class ManagerDash extends javax.swing.JFrame {
         mnuExit = new javax.swing.JMenuItem();
         mnuEditShipment = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        mnuEditUser = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tblMainDisplay.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -109,6 +108,11 @@ public class ManagerDash extends javax.swing.JFrame {
 
         mnuNewUser.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         mnuNewUser.setText("New User");
+        mnuNewUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuNewUserActionPerformed(evt);
+            }
+        });
         jMenu1.add(mnuNewUser);
 
         mnuRefresh.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
@@ -136,10 +140,6 @@ public class ManagerDash extends javax.swing.JFrame {
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Edit Shipment");
         mnuEditShipment.add(jMenuItem1);
-
-        mnuEditUser.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        mnuEditUser.setText("Edit Users");
-        mnuEditShipment.add(mnuEditUser);
 
         jMenuBar1.add(mnuEditShipment);
 
@@ -185,7 +185,8 @@ public class ManagerDash extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mnuNewShipmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuNewShipmentActionPerformed
-        // TODO add your handling code here:
+        NewShipment ns = new NewShipment();
+        ns.setVisible(true);
     }//GEN-LAST:event_mnuNewShipmentActionPerformed
 
     private void mnuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExitActionPerformed
@@ -198,13 +199,21 @@ public class ManagerDash extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuRefreshActionPerformed
 
     private void btnEditShipmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditShipmentActionPerformed
-        // TODO add your handling code here:
+        int index = tblMainDisplay.getSelectedRow();
+        int sid = convertInt(tblMainDisplay.getValueAt(index, 1).toString());
+        EditShipment es = new EditShipment(sid);
+        es.setVisible(true);
     }//GEN-LAST:event_btnEditShipmentActionPerformed
 
     private void txtSearchTextValueChanged(java.awt.event.TextEvent evt) {//GEN-FIRST:event_txtSearchTextValueChanged
         ArrayList <Shipment> shipmentSearch = con.getShipments(txtSearch.getText());
         fillManagerTable(shipmentSearch);
     }//GEN-LAST:event_txtSearchTextValueChanged
+
+    private void mnuNewUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuNewUserActionPerformed
+        NewUser nu = new NewUser();
+        nu.setVisible(true);
+    }//GEN-LAST:event_mnuNewUserActionPerformed
 
     /**
      * @param args the command line arguments
@@ -250,7 +259,6 @@ public class ManagerDash extends javax.swing.JFrame {
     private java.awt.Label lblSearch;
     private java.awt.Label lblTitleManDash;
     private javax.swing.JMenu mnuEditShipment;
-    private javax.swing.JMenuItem mnuEditUser;
     private javax.swing.JMenuItem mnuExit;
     private javax.swing.JMenuItem mnuNewShipment;
     private javax.swing.JMenuItem mnuNewUser;
@@ -294,5 +302,14 @@ public class ManagerDash extends javax.swing.JFrame {
         }
     }
     
+    
+    
+    private int convertInt(String intStr){
+        try {
+            return Integer.parseInt(intStr);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
 
 }
