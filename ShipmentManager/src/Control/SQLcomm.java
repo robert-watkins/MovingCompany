@@ -27,6 +27,12 @@ public class SQLcomm {
     }
     
     //**************************************************************************
+    // Get Shipment for manager and team dashboard
+    //**************************************************************************
+    
+    
+    
+    //**************************************************************************
     // Get Authentication
     //**************************************************************************
     
@@ -71,18 +77,14 @@ public class SQLcomm {
             
             ResultSet results = getUser_names.executeQuery();
             while(results.next()){
-                array.add(user_name);
-                System.out.println(array);
+                array.add(results.getString("user_name"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(SQLcomm.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        for(int i=0; i > array.size()-1; i++){
-            
-            if(user_name.equals(array.get(i))){
-                bool=true;
-            }
+        if(array.contains(user_name)){
+            bool=true;
         }
         
         return bool;
@@ -90,7 +92,6 @@ public class SQLcomm {
     
     public static void main(String[] args) {
         SQLcomm sql = new SQLcomm();
-        sql.isValid("rwatkins");
         System.out.println(sql.isValid("rwatkins"));
         
         //User user = sql.getAuth("rwatkins");
