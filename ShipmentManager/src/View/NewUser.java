@@ -46,8 +46,11 @@ public class NewUser extends javax.swing.JFrame {
         lblClearance = new java.awt.Label();
         chClearance = new java.awt.Choice();
         btnSave = new java.awt.Button();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        mnuExit = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblNewUser.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         lblNewUser.setText("Create User");
@@ -70,6 +73,20 @@ public class NewUser extends javax.swing.JFrame {
                 btnSaveActionPerformed(evt);
             }
         });
+
+        jMenu1.setText("File");
+
+        mnuExit.setText("Exit");
+        mnuExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuExitActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuExit);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,9 +145,9 @@ public class NewUser extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblClearance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chClearance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         getAccessibleContext().setAccessibleName("New User");
@@ -145,6 +162,11 @@ public class NewUser extends javax.swing.JFrame {
         System.out.println("usr created");
         
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void mnuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExitActionPerformed
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_mnuExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,6 +206,8 @@ public class NewUser extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button btnSave;
     private java.awt.Choice chClearance;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
     private java.awt.Label lblClearance;
     private java.awt.Label lblFirstName;
     private java.awt.Label lblLastName;
@@ -191,6 +215,7 @@ public class NewUser extends javax.swing.JFrame {
     private java.awt.Label lblPassword;
     private java.awt.Label lblSocialSecurity;
     private java.awt.Label lblUserName;
+    private javax.swing.JMenuItem mnuExit;
     private java.awt.TextField txtFirstName;
     private java.awt.TextField txtLastName;
     private java.awt.TextField txtPassword;
@@ -205,7 +230,7 @@ public class NewUser extends javax.swing.JFrame {
                 txtLastName.getText(),
                 txtSocial.getText()
         );
-        System.out.println(emp.getSocial_security());
+        
         return emp;
     }
     
