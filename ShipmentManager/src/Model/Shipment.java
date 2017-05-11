@@ -10,16 +10,36 @@ import java.sql.*;
 public class Shipment {
     private int shipment_id;
     private int customer_id;
+    private String last_name;
+    private String first_name;
     private Date order_date; 
     private int truck_id;
     private int team_id;
-    private int inventory_id;
+
     private String status;
     private double weight;
     private Date date_in;
     private Date date_out;
     private Date last_update;
 
+    public Shipment(int shipment_id, int customer_id, String last_name, 
+            String first_name, Date order_date, int truck_id, int team_id, 
+            String status, double weight, Date date_in, 
+            Date date_out){
+        this.shipment_id = shipment_id;
+        this.customer_id = customer_id;
+        this.last_name = last_name;
+        this.first_name = first_name;
+        this.order_date = order_date;
+        this.truck_id = truck_id;
+        this.team_id = team_id;
+
+        this.status = status;
+        this.weight = weight;
+        this.date_in = date_in;
+        this.date_out = date_out;
+        
+    }
     /**
      * @return the shipment_id
      */
@@ -91,20 +111,6 @@ public class Shipment {
     }
 
     /**
-     * @return the inventory_id
-     */
-    public int getInventory_id() {
-        return inventory_id;
-    }
-
-    /**
-     * @param inventory_id the inventory_id to set
-     */
-    public void setInventory_id(int inventory_id) {
-        this.inventory_id = inventory_id;
-    }
-
-    /**
      * @return the status
      */
     public String getStatus() {
@@ -172,6 +178,34 @@ public class Shipment {
      */
     public void setLast_update(Date last_update) {
         this.last_update = last_update;
+    }
+
+    /**
+     * @return the last_name
+     */
+    public String getLast_name() {
+        return last_name;
+    }
+
+    /**
+     * @param last_name the last_name to set
+     */
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    /**
+     * @return the first_name
+     */
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    /**
+     * @param first_name the first_name to set
+     */
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
     
     
